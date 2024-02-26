@@ -45,12 +45,12 @@
 ```
 
 ## Admin Username and Password
-- Admin username: Nurdaulet
+- Admin username: nurdaulet
 - Admin password: In moodle
 
 ## Project Contributors
 - Nurdaulet, Group SE-2201
 
 ## Links
-- **Deployed Link:** 
+- **Deployed Link:**  https://backend-event-cu0t.onrender.com
 - **GitHub Repository:** https://github.com/ornur/
