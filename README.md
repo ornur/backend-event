@@ -46,7 +46,7 @@
 
 ## Admin Username and Password
 - Admin username: nurdaulet
-- Admin password: In moodle
+- Admin password: admin
 
 ## Project Contributors
 - Nurdaulet, Group SE-2201
