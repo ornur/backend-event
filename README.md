@@ -53,4 +53,4 @@
 
 ## Links
 - **Deployed Link:**  https://backend-event-cu0t.onrender.com
-- **GitHub Repository:** https://github.com/ornur/
+- **GitHub Repository:** https://github.com/ornur/backend-event
