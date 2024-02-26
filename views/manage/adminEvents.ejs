@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Admin Panel</title>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="bg-dark" id="navibar">
+        <div class="container-fluid">
+            <h3 class="text-light float-start">Events Admin Panel</h3>
+            <a href="/admin" class="btn text-light" role="button">Users</a>
+            <a href="/logout" class="btn text-light float-end" role="button">Logout</a>
+        </div>
+    </nav>
+    <main class="container rounded cover little-box">
+        <h1 class="text-center">Events Admin Panel</h1>
+        <button type="button" class="btn btn-success d-grid gap-2 col-6 mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add New Event
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">New Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form to add a new event -->
+                        <form action="/adminEvents" method="post">
+                            <div class="form-group">
+                                <label for="eventNameEnglish">Event Name (English):</label>
+                                <input type="text" class="form-control" id="eventNameEnglish" name="eventNameEnglish"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventNameRussian">Event Name (Russian):</label>
+                                <input type="text" class="form-control" id="eventNameRussian" name="eventNameRussian"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDescriptionEnglish">Event Description (English):</label>
+                                <textarea class="form-control" id="eventDescriptionEnglish"
+                                    name="eventDescriptionEnglish" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDescriptionRussian">Event Description (Russian):</label>
+                                <textarea class="form-control" id="eventDescriptionRussian"
+                                    name="eventDescriptionRussian" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventImage1">Event Image 1 URL:</label>
+                                <input type="text" class="form-control" id="eventImage1" name="eventImage1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventImage2">Event Image 2 URL:</label>
+                                <input type="text" class="form-control" id="eventImage2" name="eventImage2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventImage3">Event Image 3 URL:</label>
+                                <input type="text" class="form-control" id="eventImage3" name="eventImage3" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Display existing events -->
+        <h2>Existing Events</h2>
+        <div id="eventList">
+            <% events.forEach(event=> { %>
+                <% if (!event.timestamps.deleted) { %>
+                <div class="card mb-3 col" id="card-size">
+                    <div class="card-body">
+                        <div class="bg-info p-2 rounded">
+                            <h5 class="card-title">
+                                <%= event.names.english %>
+                            </h5>
+                            <h5 class="card-title">
+                                <%= event.names.russian %>
+                            </h5>
+                        </div>
+                        <div class="bg-secondary p-2 rounded">
+                            <p class="card-text">
+                                <%= event.descriptions.english %>
+                            </p>
+                            <p class="card-text">
+                                <%= event.descriptions.russian %>
+                            </p>
+                        </div>
+
+                        <div id="carouselExample<%= event._id %>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <% event.images.forEach((image, index)=> { %>
+                                    <div class="ratio ratio-16x9 carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="<%= image %>" class="d-block w-100" alt="Event Image">
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExample<%= event._id %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExample<%= event._id %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<%= event._id %>">
+                            Edit Event
+                        </button>
+                        <div class="modal fade" id="editModal<%= event._id %>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light"  data-bs-theme="dark">
+                                        <h1 class="modal-title fs-5" id="editModalLabel">Edit Event</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#names" role="button"
+                                            aria-expanded="false" aria-controls="names">Event Name</a>
+                                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#descriptions" role="button"
+                                            aria-expanded="false" aria-controls="descriptions">Event Description</a>
+                                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#URLs" role="button"
+                                            aria-expanded="false" aria-controls="URLs">Event URLs</a>
+                                        <div class="collapse m-3" id="names">
+                                            <div class="form-group">
+                                                <label class="pb-3 fw-bold" for="editNameEnglish">Event Name (English):</label>
+                                                <input type="text" class="form-control" id="editNameEnglish<%= event._id %>" name="editNameEnglish" 
+                                                    value="<%= event.names.english %>" required>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group">
+                                                <label class="pb-3 fw-bold" for="editNameRussian">Event Name (Russian):</label>
+                                                <input type="text" class="form-control" id="editNameRussian<%= event._id %>" name="editNameRussian"
+                                                    value="<%= event.names.russian %>" required>
+                                            </div>
+                                        </div>
+                                        <div class="collapse m-3" id="descriptions">
+                                            <div class="form-group">
+                                                <label class="pb-3 fw-bold" for="editDescriptionEnglish">Event Description (English):</label>
+                                                <textarea class="form-control" id="editDescriptionEnglish<%= event._id %>"
+                                                    name="editDescriptionEnglish" rows="3" required><%= event.descriptions.english %></textarea>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group">
+                                                <label class="pb-3 fw-bold" for="editDescriptionRussian">Event Description (Russian):</label>
+                                                <textarea class="form-control" id="editDescriptionRussian<%= event._id %>"
+                                                    name="editDescriptionRussian" rows="3" required><%= event.descriptions.russian %></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="collapse m-3" id="URLs">
+                                            <% event.images.forEach((image, index)=> { %>
+                                            <div class="form-group">
+                                                <label class="pb-3 fw-bold" for="editImage<%= index+1  %>">Event Image <%= index+1  %> URL:</label>
+                                                <input type="text" class="form-control" id="<%= event._id %>editImage<%=index+1%>" name="editImage<%= index+1  %>" value="<%= image %>" required>
+                                            </div>
+                                            <hr>
+                                            <% }) %>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="updateEvent('<%= event._id %>')">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="deleteEvent('<%= event._id %>')" class="btn btn-danger float-end">Delete Event</button>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+        </div>
+    </main>
+    <%- include("../partials/footer") %>
+    <script>
+        async function deleteEvent(eventId) {
+            try {
+                // Send a DELETE request to the server to delete the book with the specified ID
+                await fetch(`/adminEvents/${eventId}`, { method: 'DELETE' });
+
+                // After successfully deleting the event, refresh the page
+                location.reload();
+            } catch (error) {
+                // If an error occurs during the delete operation, log the error to the console
+                console.error('Error deleting EVENT:', error);
+            }
+        }
+        async function updateEvent(eventId) {
+            try {
+                            const updatedEvent = {
+                            names: {
+                                russian: document.getElementById("editNameRussian"+eventId).value,
+                                english: document.getElementById("editNameEnglish"+eventId).value
+                            },
+                            descriptions: {
+                                russian: document.getElementById('editDescriptionRussian'+eventId).value,
+                                english: document.getElementById('editDescriptionEnglish'+eventId).value
+                            },
+                            images: [
+                                document.getElementById(eventId+'editImage1').value,
+                                document.getElementById(eventId+'editImage2').value,
+                                document.getElementById(eventId+'editImage3').value
+                            ]
+                            };
+                            try {
+                            // Send a PUT request to the server to update the event with the specified ID
+                            await fetch(`/adminEvents/${eventId}`,{
+                                method: 'PUT',
+                                headers: {
+                                'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(updatedEvent) // Replace {} with your valid JSON object
+                            });
+                            alert("Updated Successfully");
+                            console.log(updatedEvent);
+                            await new Promise(r => setTimeout(r, 3000));
+                            location.reload();
+                            } catch (error) {
+                                console.error('Error updating event:', error);
+                                alert('Error updating event. Please try again.');
+                            }
+                        } catch (error) {
+                            // If an error occurs during the update operation, log the error to the console
+                            console.error('Error updating EVENT:', error);
+                        }
+                    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+
+</html>

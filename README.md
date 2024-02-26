@@ -1,33 +1,31 @@
-# Assignment - 3: MongoDB and Deployment
-
-## Overview
-This individual assignment focuses on working with MongoDB and Deployment. The project includes developing a login page, admin panel, integrating APIs, and deploying the application.
+# Assignment - 4: Event Management
 
 ## Features
-1. **Login Page and Admin Panel:**
-   - Develop a login page integrated with MongoDB Atlas.
-   - Store user information including user ID, username, creation date, update date, deletion date, and admin status.
-   - Implement an admin panel for managing users.
+1. **User Registration:**
+   - Created a registration page where users can sign up by providing a username, password, and any other required information
+   - Hashed Password
+   - Unique Username
 
-2. **API Integration:**
-   - Integrated `OpenWeather API`, `Google Map API` and `Unplash API`.
-   - In MongoDB Atlas database have table for user and their histories.
+2. **User Login:**
+   - Created a login page.
+   - Hashed Password check.
+   - hashPassword === hashPassword -> redirect `Main Page`
 
-3. **Deployment:**
-   - Deploy the project on a hosting service. I used `Microsoft Azure Virtual Machine` to get access my website
+3. **Authentication Middleware:**
+   - Protect routes that require authentication
+   - Redirect if `user` not in `session`
    
-4. **Project Organization and Design:**
-   - Maintain clean code and project structure.
-   - Follow best practices for coding.
-   - `Bootstrap` used
+4. **Authorization:**
+   - Define user roles or permissions such as `admin` or `regular user` and stores roles in database
+   - In login page check user's role. If everything 'true' redirect 'user' to `admin panel`
    
-5. **Responsive Design and User Interface:**
-   - Design visually appealing UI with EJS.
-   - Implement a navigation bar for seamless redirection.
-
-## Requirements
-- The server must run on port `3000`.
-- Grant IP access to Atlas from any location.
+5. **REST API:**
+   - Admin can add, read, update and delete `CRUD`
+   - `CRUD` working for users and events
+   - Carousel feature implemented from `Bootstrap 5` used in `admin panel` and `main page`
+   - Admin can watch in 2 languages, User can choose language by dropdown button
+6. **APIs:**
+   - `Unsplash API KEY` used
 
 ## Setup Instructions
 1. Clone the repository.
@@ -43,9 +41,7 @@ This individual assignment focuses on working with MongoDB and Deployment. The p
     PORT=3000
     mongoURI=YOUR-MONGODB-ATLAS
     SESSION_SECRET=ANY-WORD
-    OPENWEATHERMAP_API_KEY=YOUR-API
     UNSPLASH_API_KEY=YOUR-API
-    GOOGLE_MAPS_API_KEY=YOUR-API
 ```
 
 ## Admin Username and Password
@@ -56,5 +52,5 @@ This individual assignment focuses on working with MongoDB and Deployment. The p
 - Nurdaulet, Group SE-2201
 
 ## Links
-- **Deployed Link:** http://20.82.148.215/
-- **GitHub Repository:** https://github.com/ornur/backend-login
+- **Deployed Link:** 
+- **GitHub Repository:** https://github.com/ornur/

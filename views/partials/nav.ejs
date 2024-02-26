@@ -1,13 +1,16 @@
 <!--views/nav.ejs-->
-<nav class="bg-dark text-white text-center py-3">
-    <h1 class="h3 float-left pl-5">Weather and Map</h1>
-    <% if (!isAdmin) { %>
-        <form action="/history" method="post" class="float-left">
-            <button type="submit" class="btn btn-dark">History</button>
-        </form>
-    <% } %>
-    <!-- Logout button -->
-    <form action="/logout" method="post" class="float-right">
-        <button type="submit" class="btn btn-dark">Logout</button>  
-    </form>
+<nav class="bg-dark" id="navibar">
+    <div class="container-fluid ps-0 pe-0">
+        <a href="/main" class="btn btn-light float-start rounded-0 pt-2"><h2>Events</h2></a>
+        <a href="/logout" type="submit" class="btn btn-danger float-end"><h3><i class="bi bi-box-arrow-right ps-2"></i></h3></a>
+        <div class="btn-group float-start rounded-end-2 rounded-start-0 bg-info ps-1 pb-2 pt-2">
+            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="lang" class="fi fi-gb"></span>
+            </button>
+            <ul class="dropdown-menu bg-dark">
+                <li><button onclick="changeLang('en')"><span class="fi fi-gb"></span> English</button></li>
+                <li><button onclick="changeLang('ru')"><span class="fi fi-ru"></span> Russian</button></li>
+            </ul>
+        </div>
+    </div>
 </nav>
