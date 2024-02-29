@@ -56,7 +56,11 @@ router.get('/edit/:id', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        res.render('manage/edit', { user, isAdmin: req.session.isAdmin});
+        if (user.isAdmin) {
+            return res.send('You cannot change admin\'s data');
+        }
+
+        res.render('manage/edit', { user, isAdmin: req.session.isAdmin });
     } catch (err) {
         console.error('Error:', err);
         res.status(500).send('Internal Server Error');
