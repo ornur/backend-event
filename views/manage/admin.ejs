@@ -37,8 +37,13 @@
                         <small><%= user.creationDate %></small>
                     </div>
                     <p class="mb-1">Admin Status: <%= user.adminStatus%> </p>
-                    <a class="btn btn-warning mb-1" href="/admin/edit/<%= user._id %>">Edit</a>
-                    <a class="btn btn-danger mb-1" href="/admin/delete/<%= user._id %>">Delete</a>
+                    <% if (user.adminStatus === true) { %>
+                        <a class="btn btn-warning mb-1 disabled" href="" aria-disabled="true">Cannot Edit</a>
+                        <a class="btn btn-danger mb-1 disabled" href="" aria-disabled="true">Cannot Delete</a>
+                    <% } else { %>
+                        <a class="btn btn-warning mb-1" href="/admin/edit/<%= user._id %>">Edit</a>
+                        <a class="btn btn-danger mb-1" href="/admin/delete/<%= user._id %>">Delete</a>
+                    <% } %>
                 </a>
             <% }) %>
         </div>

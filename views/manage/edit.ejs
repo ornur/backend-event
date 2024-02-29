@@ -18,15 +18,28 @@
     </nav>
     <main class="container rounded cover">
         <h1>Edit User</h1>
-        <form action="/admin/edit/<%= user._id %>" method="POST">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" id="username"  class="form-control" name="username" value="<%= user.username %>">
-            <br>
-            <label for="password" class="form-label">Password:</label>
-            <input type="password" id="password" class="form-control" name="password">
-            <br>
-            <input type="submit" class="btn btn-primary" value="Save Changes">
-        </form>
+        <% if (isAdmin) { %>
+            <form action="/admin/edit/<%= user._id %>" method="POST">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username"  class="form-control" name="username" value="<%= user.username %>" disabled>
+                <br>
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" class="form-control" name="password" disabled>
+                <br>
+                <input type="submit" class="btn btn-primary disabled" value="Save Changes" disabled>
+            </form>
+        <% } else { %>
+            <form action="/admin/edit/<%= user._id %>" method="POST">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username"  class="form-control" name="username" value="<%= user.username %>">
+                <br>
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" class="form-control" name="password">
+                <br>
+                <input type="submit" class="btn btn-primary" value="Save Changes">
+            </form>
+       <% } %>
+
     </main>
     <%- include("../partials/footer.ejs") %>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

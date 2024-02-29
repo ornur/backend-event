@@ -56,10 +56,6 @@ router.get('/edit/:id', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        if (user.isAdmin) {
-            return res.send('You cannot change admin\'s data');
-        }
-
         res.render('manage/edit', { user, isAdmin: req.session.isAdmin });
     } catch (err) {
         console.error('Error:', err);
@@ -69,14 +65,27 @@ router.get('/edit/:id', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
     const userId = req.params.id;
-    const { username, password } = req.body;
+    const { username, password, isAdmin } = req.body;
 
     try {
+        // Check if the current user is authorized to perform this action
+        const currentUser = await User.findOne({ _id: req.session.userId });
+        if (!currentUser) {
+            return res.status(403).send('Forbidden, sign up please');
+        }
+
+        const userToEdit = await User.findOne({ _id: new ObjectId(userId) });
+
+        // If the user to edit is an admin, and either the username or password is being changed, disallow the change
+        if (userToEdit.isAdmin && (username !== userToEdit.username || password)) {
+            return res.send('You are not allowed to change the username or password of an admin user');
+        }
+
         //Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Update user in database
-        await User.updateOne({ _id: new ObjectId(userId) }, { $set: { username, password : hashedPassword } });
+        await User.updateOne({ _id: new ObjectId(userId) }, { $set: { username, password: hashedPassword, isAdmin } });
 
         res.redirect('/admin');
     } catch (err) {
@@ -84,6 +93,10 @@ router.post('/edit/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+
+
 
 router.get('/delete/:id', async (req, res) => {
     const userId = req.params.id;
