@@ -1,5 +1,10 @@
 # Assignment - 4: Event Management
 
+## Fixes
+
+- Unchangeable data for admin statused users
+
+
 ## Features
 1. **User Registration:**
    - Created a registration page where users can sign up by providing a username, password, and any other required information

@@ -13,12 +13,12 @@
 </head>
 <body style="background-image: url('<%= photoUrl %>');">
     <%- include("./partials/nav.ejs") %>
-    <main id="main" class="container">
+    <main id="main" class="container h-auto">
         <h1 class="text-center mt-5">Events</h1>
         <div class="row mt-4">
             <% if (events && events.length > 0) { %>
                 <% events.forEach(event => { %>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4 content">
                         <div class="card">
                             <div id="carousel<%= event._id %>" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" style="height: 200px; object-fit: cover;">
